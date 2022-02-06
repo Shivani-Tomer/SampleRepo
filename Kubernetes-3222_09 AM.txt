@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ais-ifm
+  labels:
+    app: nice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ais
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: ais
+        tier: web
+    spec:
+      containers:
+      - name: tomcat
+        image: tomcat:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:  
+            cpu: 1000m
+            memory: 600Mi             
+          requests: 
+            cpu: 500m
+            memory: 300Mi	
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:  
+            cpu: 400m
+            memory: 200Mi             
+          requests: 
+            cpu: 200m
+            memory: 100Mi
